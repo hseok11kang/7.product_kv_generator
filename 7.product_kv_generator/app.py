@@ -1,4 +1,4 @@
-# app.py — 📸 Key Visual Editor (PDP → 3 KV → Pick → Prompt → Edit(Result))
+# app.py — 📸Key Visual Editor (PDP → 3 KV → Pick → Prompt → Edit(Result))
 # -----------------------------------------------------------------------------
 # 설치:
 #   pip install -U streamlit pillow
@@ -123,7 +123,9 @@ if st.button("PDP 분석 및 핵심 KV 추출", type="primary"):
 
 # 제품 요약(3줄) + 3장 그리드(썸네일)
 if st.session_state.top3:
-    st.markdown("### 제품 핵심 Key Visual")
+    # ▼ 요청사항 반영: 워딩 변경 + 제품명 한 줄 추가
+    st.markdown("### 제품 정보 및 Key Visual")
+    st.write("LG 올레드 TV 스탠드형 (OLED48B4NNA)")
     for line in PRODUCT_SUMMARY_LINES:
         st.write(f"• {line}")
 
@@ -204,4 +206,3 @@ if st.session_state.result is not None:
         st.image(rim, width=520)  # 해상도는 원본, 화면 표시만 작게
     else:
         st.image(rim, use_container_width=True)
-
