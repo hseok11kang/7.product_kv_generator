@@ -46,11 +46,22 @@ def try_open(path, max_px=2400):
         return None
 
 def find_first_existing(basename, base_dir=IMAGE_DIR):
-    """KV1 → KV1.png/jpg/jpeg/webp 중 존재하는 첫 파일 경로 반환"""
-    for ext in ALLOWED_EXT:
-        p = os.path.join(base_dir, basename + ext)
-        if os.path.isfile(p):
-            return p
+    """
+    KV1 → KV1.png/jpg/jpeg/webp 중 '대소문자 무시'하고 존재하는 첫 파일 경로 반환
+    - 확장자: .jpg/.JPG 모두 허용
+    - 파일명: KV1/kv1/kv1 등 모두 허용
+    """
+    # 소문자 허용 확장자 + 대문자 확장자까지 모두 시도
+    exts = ALLOWED_EXT + [e.upper() for e in ALLOWED_EXT]
+
+    # 우선순위: 원래 표기(basename) → 소문자 → 대문자
+    basenames = [basename, basename.lower(), basename.upper()]
+
+    for bn in basenames:
+        for ext in exts:
+            p = os.path.join(base_dir, bn + ext)
+            if os.path.isfile(p):
+                return p
     return None
 
 def load_kv123():
@@ -193,3 +204,4 @@ if st.session_state.result is not None:
         st.image(rim, width=520)  # 해상도는 원본, 화면 표시만 작게
     else:
         st.image(rim, use_container_width=True)
+
