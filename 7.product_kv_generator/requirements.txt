@@ -1,0 +1,11 @@
+streamlit
+requests
+pandas
+numpy
+matplotlib
+beautifulsoup4
+lxml
+google-genai
+
+streamlit>=1.38
+pillow>=10.0
